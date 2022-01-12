@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 let urlExpression =
 	/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
@@ -89,6 +90,12 @@ const BootcanmpSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+});
+
+//create bootcampt slug
+BootcanmpSchema.pre("save", function (next) {
+	this.slug = slugify(this.name, { lower: true });
+	next();
 });
 
 module.exports = mongoose.model("Bootcamp", BootcanmpSchema);
