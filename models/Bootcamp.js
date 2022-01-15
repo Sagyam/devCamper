@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const geoCoder = require("../utils/geoCoder");
 
 let urlExpression =
 	/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
@@ -37,11 +38,9 @@ const BootcanmpSchema = new mongoose.Schema({
 		type: {
 			type: String,
 			enum: ["Point"],
-			required: false,
 		},
 		coordinates: {
 			type: [Number],
-			required: false,
 			indexedd: "2dsphere",
 		},
 		formattedAddress: String,
@@ -96,6 +95,24 @@ const BootcanmpSchema = new mongoose.Schema({
 BootcanmpSchema.pre("save", function (next) {
 	this.slug = slugify(this.name, { lower: true });
 	next();
+});
+
+//Geocoe and create bootcamp location
+BootcanmpSchema.pre("save", async function (next) {
+	const loc = await geoCoder.geocode(this.address);
+	this.location = {
+		type: "Point",
+		coordinates: [loc[0].longitude, loc[0].latitude],
+		formattedAddress: loc[0].formattedAddress,
+		street: loc[0].streetName,
+		city: loc[0].city,
+		state: loc[0].stateCode,
+		zipcode: loc[0].zipcode,
+		country: loc[0].countryCode,
+	};
+
+	//don't save address in DB
+	this.address = undefined;
 });
 
 module.exports = mongoose.model("Bootcamp", BootcanmpSchema);
