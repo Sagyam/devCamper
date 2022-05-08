@@ -7,7 +7,6 @@ const {
 	updateCourse,
 	deleteCourse,
 } = require("../controllers/courses");
-const { route } = require("./bootcamps");
 
 const router = express.Router({ mergeParams: true });
 
