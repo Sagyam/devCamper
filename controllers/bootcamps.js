@@ -112,7 +112,6 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
 			new ErrorResponse(`Bootcamp not found with id of ${req.params.id}`, 404)
 		);
 	}
-	console.log(req.files);
 	//Check if file is provided
 	if (!req.files) {
 		return next(new ErrorResponse(`Please upload a file`, 400));
