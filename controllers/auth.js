@@ -64,7 +64,6 @@ const sendTokenResponse = (user, statusCode, res) => {
 // @route     GET /api/v1/auth/me
 // @access    Private
 exports.getMe = asyncHandler(async (req, res, next) => {
-	console.log(req.user);
 	const user = await User.findById(req.user.id);
 	res.status(200).json({
 		success: true,
