@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const connectDB = require("./config/db");
 const colours = require("colors");
 const errorHandler = require("./middlewares/error");
+const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 
@@ -22,6 +23,9 @@ const app = express();
 
 //Body parser
 app.use(express.json());
+
+//Cookie parser
+app.use(cookieParser());
 
 //Mount router
 app.use("/api/v1/bootcamps", bootcamps);
