@@ -9,10 +9,12 @@ const {
 	resetPassword,
 	updateDetails,
 	updatePassword,
+	logout,
 } = require("../controllers/auth");
 
 router.post("/register", register);
 router.post("/login", login);
+router.get("/logout", logout);
 router.get("/me", protect, getMe);
 router.patch("/update-details", protect, updateDetails);
 router.patch("/update-password", protect, updatePassword);
