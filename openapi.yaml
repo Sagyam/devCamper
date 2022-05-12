@@ -1,0 +1,599 @@
+---
+openapi: 3.0.3
+info:
+  title: DevCamper API
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: "https://dev-camper7.herokuapp.com/"
+  - url: "http://localhost:5000"
+paths:
+  /api/v1/auth/forgotpassword:
+    post:
+      tags:
+        - Auth
+      summary: Forgot Password
+      description: Forgot Password
+      operationId: forgotPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john@gmail.com
+            example:
+              email: john@gmail.com
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      description: Login
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: object
+                  properties:
+                    $gt:
+                      type: string
+                      example: ""
+                password:
+                  type: string
+                  example: "123456"
+            example:
+              email:
+                $gt: ""
+              password: "123456"
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/logout:
+    get:
+      tags:
+        - Auth
+      summary: Logout
+      description: Logout
+      operationId: logout
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get Me
+      description: Get Me
+      operationId: getMe
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      description: Register User
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john@gmail.com
+                name:
+                  type: string
+                  example: John Doe
+                password:
+                  type: string
+                  example: "123456"
+                role:
+                  type: string
+                  example: publisher
+            example:
+              email: john@gmail.com
+              name: John Doe
+              password: "123456"
+              role: publisher
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/resetpassword/7585d2a5fba2b5f796bab846608fade8922cdddf:
+    put:
+      tags:
+        - Auth
+      summary: Reset Password
+      description: Reset Password
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  example: "123456789"
+            example:
+              password: "123456789"
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/update-details:
+    patch:
+      tags:
+        - Auth
+      summary: Update Details
+      description: Update Details
+      operationId: updateDetails
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@gmail.com
+                name:
+                  type: string
+                  example: User Account
+            example:
+              email: user@gmail.com
+              name: User Account
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/update-password:
+    patch:
+      tags:
+        - Auth
+      summary: Update Password
+      description: Update Password
+      operationId: updatePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                  example: abcd123
+                newPassword:
+                  type: string
+                  example: "123456"
+            example:
+              currentPassword: abcd123
+              newPassword: "123456"
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps:
+    get:
+      tags:
+        - Bootcamps
+      summary: Get single bootcamp by id
+      description: Get single bootcamp by id
+      operationId: getSingleBootcampById
+      responses:
+        "200":
+          description: ""
+    put:
+      tags:
+        - Bootcamps
+      summary: Update a bootcamp
+      description: Update a bootcamp
+      operationId: updateABootcamp
+      responses:
+        "200":
+          description: ""
+    post:
+      tags:
+        - Bootcamps
+      summary: Create a new bootcamp
+      description: Create a new bootcamp
+      operationId: createANewBootcamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                __v:
+                  type: number
+                  example: 0
+                address:
+                  type: string
+                  example: "220 Pawtucket St, Lowell, MA 01854"
+                careers:
+                  type: array
+                  items:
+                    type: string
+                    example: Web Development
+                  example:
+                    - Web Development
+                    - UI/UX
+                    - Mobile Development
+                createdAt:
+                  type: string
+                  example: "2022-01-10T05:42:44.729Z"
+                description:
+                  type: string
+                  example: "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX"
+                email:
+                  type: string
+                  example: enroll@moderntech.com
+                housing:
+                  type: boolean
+                  example: false
+                jobAssistance:
+                  type: boolean
+                  example: true
+                jobGuarantee:
+                  type: boolean
+                  example: false
+                location:
+                  type: object
+                  properties:
+                    coordinates:
+                      type: array
+                      items: {}
+                      example: []
+                name:
+                  type: string
+                  example: New Neeew Bootcamp
+                photo:
+                  type: string
+                  example: default.jpg
+                website:
+                  type: string
+                  example: "https://moderntech.com"
+            example:
+              __v: 0
+              address: "220 Pawtucket St, Lowell, MA 01854"
+              careers:
+                - Web Development
+                - UI/UX
+                - Mobile Development
+              createdAt: "2022-01-10T05:42:44.729Z"
+              description: "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX"
+              email: enroll@moderntech.com
+              housing: false
+              jobAssistance: true
+              jobGuarantee: false
+              location:
+                coordinates: []
+              name: New Neeew Bootcamp
+              photo: default.jpg
+              website: "https://moderntech.com"
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/5d725a037b292f5f8ceff787/photo:
+    put:
+      tags:
+        - Bootcamps
+      summary: Upload Photo
+      description: Upload Photo
+      operationId: uploadPhoto
+      requestBody:
+        content:
+          application/octet-stream: {}
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/5d725a037b292f5f8ceff787/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get Reviews
+      description: Get Reviews
+      operationId: getReviews
+      responses:
+        "200":
+          description: ""
+    post:
+      tags:
+        - Reviews
+      summary: Create a Review
+      description: Create a Review
+      operationId: createAReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: string
+                  example: "1"
+                text:
+                  type: string
+                  example: loream ipsum
+                title:
+                  type: string
+                  example: New Review
+            example:
+              rating: "1"
+              text: loream ipsum
+              title: New Review
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/5d725a1b7b292f5f8ceff788:
+    delete:
+      tags:
+        - Bootcamps
+      summary: Delete a bootcamp
+      description: Delete a bootcamp
+      operationId: deleteABootcamp
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/5d725a1b7b292f5f8ceff788/courses:
+    get:
+      tags:
+        - Courses
+      summary: Get all Courses of a bootcamp
+      description: Get all Courses of a bootcamp
+      operationId: getAllCoursesOfABootcamp
+      parameters:
+        - name: ""
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    post:
+      tags:
+        - Courses
+      summary: Create a course
+      description: Create a course
+      operationId: createACourse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  example: "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB"
+                minimumSkill:
+                  type: string
+                  example: intermediate
+                scholarshipAvailable:
+                  type: boolean
+                  example: false
+                title:
+                  type: string
+                  example: Full Stack Web Development
+                tuition:
+                  type: number
+                  example: 10000
+                weeks:
+                  type: string
+                  example: "12"
+            example:
+              description: "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB"
+              minimumSkill: intermediate
+              scholarshipAvailable: false
+              title: Full Stack Web Development
+              tuition: 10000
+              weeks: "12"
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/radius/02118/10:
+    get:
+      tags:
+        - Bootcamps
+      summary: Get all Bootcamps in Radius
+      description: Get all Bootcamps in Radius
+      operationId: getAllBootcampsInRadius
+      responses:
+        "200":
+          description: ""
+  /api/v1/courses:
+    get:
+      tags:
+        - Courses
+      summary: Get all Courses
+      description: Get all Courses
+      operationId: getAllCourses
+      parameters:
+        - name: select
+          in: query
+          schema:
+            type: string
+            example: title
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: "2"
+        - name: limit
+          in: query
+          schema:
+            type: string
+            example: "5"
+      responses:
+        "200":
+          description: ""
+  /api/v1/courses/5d725cb9c4ded7bcb480eaa1:
+    delete:
+      tags:
+        - Courses
+      summary: Delete a course
+      description: Delete a course
+      operationId: deleteACourse
+      responses:
+        "200":
+          description: ""
+  /api/v1/courses/5d725ce8c4ded7bcb480eaa3:
+    get:
+      tags:
+        - Courses
+      summary: Get course by Id
+      description: Get course by Id
+      operationId: getCourseById
+      responses:
+        "200":
+          description: ""
+    put:
+      tags:
+        - Courses
+      summary: Update Course
+      description: Update Course
+      operationId: updateCourse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tuition:
+                  type: number
+                  example: 8000
+            example:
+              tuition: 8000
+      responses:
+        "200":
+          description: ""
+  /api/v1/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get all Reviews
+      description: Get all Reviews
+      operationId: getAllReviews
+      responses:
+        "200":
+          description: ""
+  /api/v1/reviews/627c9958d3d8805b00818fec:
+    get:
+      tags:
+        - Reviews
+      summary: Get Single Review
+      description: Get Single Review
+      operationId: getSingleReview
+      responses:
+        "200":
+          description: ""
+  /api/v1/reviews/627c9d5f7089de43b270cef4:
+    delete:
+      tags:
+        - Reviews
+      summary: Delete a Review
+      description: Delete a Review
+      operationId: deleteAReview
+      responses:
+        "200":
+          description: ""
+    patch:
+      tags:
+        - Reviews
+      summary: Update a Review
+      description: Update a Review
+      operationId: updateAReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rating:
+                  type: number
+                  example: 5
+            example:
+              rating: 5
+      responses:
+        "200":
+          description: ""
+  /api/v1/users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Get all users
+      operationId: getAllUsers
+      responses:
+        "200":
+          description: ""
+    post:
+      tags:
+        - Users
+      summary: Create User
+      description: Create User
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: sagyma@gmail.com
+                name:
+                  type: string
+                  example: sagyam
+                password:
+                  type: string
+                  example: "123456"
+            example:
+              email: sagyma@gmail.com
+              name: sagyam
+              password: "123456"
+      responses:
+        "200":
+          description: ""
+  /api/v1/users/627c68eefd2c87cc98fc3d56:
+    get:
+      tags:
+        - Users
+      summary: Get a user
+      description: Get a user
+      operationId: getAUser
+      responses:
+        "200":
+          description: ""
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Delete a user
+      operationId: deleteAUser
+      responses:
+        "200":
+          description: ""
+    patch:
+      tags:
+        - Users
+      summary: Update a user
+      description: Update a user
+      operationId: updateAUser
+      responses:
+        "200":
+          description: ""
+tags:
+  - name: Bootcamps
+  - name: Courses
+  - name: Auth
+  - name: Users
+  - name: Reviews
