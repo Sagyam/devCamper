@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
 
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -39,6 +41,12 @@ app.use(
 		replaceWith: "",
 	})
 );
+
+//Set security headers
+app.use(helmet());
+
+//Set xss protection
+app.use(xss());
 
 //Cookie parser
 app.use(cookieParser());
