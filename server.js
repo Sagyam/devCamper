@@ -7,6 +7,7 @@ const errorHandler = require("./middlewares/error");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const path = require("path");
+const mongoSanitize = require("express-mongo-sanitize");
 
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -25,6 +26,19 @@ const app = express();
 
 //Body parser
 app.use(express.json());
+
+//Sanitize data
+app.use(
+	mongoSanitize({
+		onSanitize: ({ req, key }) => {
+			console.warn(
+				`The request data contained malicious code at ${key} and was removed`
+					.red.bold.underline
+			);
+		},
+		replaceWith: "",
+	})
+);
 
 //Cookie parser
 app.use(cookieParser());
