@@ -4,9 +4,7 @@
 
 Backend API for DevCamper application, which is a bootcamp directory website
 
-[Live Version](https://dev-camper7.herokuapp.com/)
-
-[API Documentation](https://documenter.getpostman.com/view/8923145/SVtVVTzd?version=latest)
+[Live Version with API Documentation](https://dev-camper7.herokuapp.com/)
 
 ## Usage
 
