@@ -1,900 +1,1017 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "DevCamper API",
-    "version": "1.0.0",
-    "contact": {}
-  },
-  "servers": [
-    {
-      "url": "https://dev-camper7.herokuapp.com/"
-    },
-    {
-      "url": "http://localhost:5000"
-    }
-  ],
-  "paths": {
-    "/api/v1/auth/forgotpassword": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Forgot Password",
-        "description": "Forgot Password",
-        "operationId": "forgotPassword",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "john@gmail.com"
+   "openapi": "3.0.3",
+   "info": {
+      "title": "DevCamper API",
+      "description": "Backend API for the DevCamper application to manage bootcamps, courses, reviews, users and authentication",
+      "version": "1.0.0",
+      "contact": {}
+   },
+   "servers": [
+      {
+         "url": "https://dev-camper7.herokuapp.com"
+      }
+   ],
+   "paths": {
+      "/api/v1/auth/forgotpassword": {
+         "post": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Forgot Password",
+            "description": "Generate password token and send email",
+            "operationId": "forgotPassword",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "example": "john@gmail.com"
+                           }
+                        }
+                     },
+                     "example": {
+                        "email": "john@gmail.com"
+                     }
                   }
-                }
-              },
-              "example": {
-                "email": "john@gmail.com"
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Login",
-        "description": "Login",
-        "operationId": "login",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "object",
-                    "properties": {
-                      "$gt": {
-                        "type": "string",
-                        "example": ""
-                      }
-                    }
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "123456"
-                  }
-                }
-              },
-              "example": {
-                "email": {
-                  "$gt": ""
-                },
-                "password": "123456"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/logout": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Logout",
-        "description": "Logout",
-        "operationId": "logout",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/me": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Get Me",
-        "description": "Get Me",
-        "operationId": "getMe",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/register": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Register User",
-        "description": "Register User",
-        "operationId": "registerUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "john@gmail.com"
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "123456"
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "publisher"
-                  }
-                }
-              },
-              "example": {
-                "email": "john@gmail.com",
-                "name": "John Doe",
-                "password": "123456",
-                "role": "publisher"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/resetpassword/7585d2a5fba2b5f796bab846608fade8922cdddf": {
-      "put": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Reset Password",
-        "description": "Reset Password",
-        "operationId": "resetPassword",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "password": {
-                    "type": "string",
-                    "example": "123456789"
-                  }
-                }
-              },
-              "example": {
-                "password": "123456789"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/update-details": {
-      "patch": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Update Details",
-        "description": "Update Details",
-        "operationId": "updateDetails",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "user@gmail.com"
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "User Account"
-                  }
-                }
-              },
-              "example": {
-                "email": "user@gmail.com",
-                "name": "User Account"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/auth/update-password": {
-      "patch": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Update Password",
-        "description": "Update Password",
-        "operationId": "updatePassword",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "currentPassword": {
-                    "type": "string",
-                    "example": "abcd123"
-                  },
-                  "newPassword": {
-                    "type": "string",
-                    "example": "123456"
-                  }
-                }
-              },
-              "example": {
-                "currentPassword": "abcd123",
-                "newPassword": "123456"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps": {
-      "get": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Get single bootcamp by id",
-        "description": "Get single bootcamp by id",
-        "operationId": "getSingleBootcampById",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         }
       },
-      "put": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Update a bootcamp",
-        "description": "Update a bootcamp",
-        "operationId": "updateABootcamp",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Create a new bootcamp",
-        "description": "Create a new bootcamp",
-        "operationId": "createANewBootcamp",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "__v": {
-                    "type": "number",
-                    "example": 0
-                  },
-                  "address": {
-                    "type": "string",
-                    "example": "220 Pawtucket St, Lowell, MA 01854"
-                  },
-                  "careers": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "example": "Web Development"
-                    },
-                    "example": [
-                      "Web Development",
-                      "UI/UX",
-                      "Mobile Development"
-                    ]
-                  },
-                  "createdAt": {
-                    "type": "string",
-                    "example": "2022-01-10T05:42:44.729Z"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "enroll@moderntech.com"
-                  },
-                  "housing": {
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "jobAssistance": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "jobGuarantee": {
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "location": {
-                    "type": "object",
-                    "properties": {
-                      "coordinates": {
-                        "type": "array",
-                        "items": {},
-                        "example": []
-                      }
-                    }
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "New Neeew Bootcamp"
-                  },
-                  "photo": {
-                    "type": "string",
-                    "example": "default.jpg"
-                  },
-                  "website": {
-                    "type": "string",
-                    "example": "https://moderntech.com"
+      "/api/v1/auth/login": {
+         "post": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Login",
+            "description": "Log a registered user.",
+            "operationId": "login",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "example": "atomicsamurai32@gmail.com"
+                           },
+                           "password": {
+                              "type": "string",
+                              "example": "123456"
+                           }
+                        }
+                     },
+                     "example": {
+                        "email": "atomicsamurai32@gmail.com",
+                        "password": "123456"
+                     }
                   }
-                }
-              },
-              "example": {
-                "__v": 0,
-                "address": "220 Pawtucket St, Lowell, MA 01854",
-                "careers": [
-                  "Web Development",
-                  "UI/UX",
-                  "Mobile Development"
-                ],
-                "createdAt": "2022-01-10T05:42:44.729Z",
-                "description": "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX",
-                "email": "enroll@moderntech.com",
-                "housing": false,
-                "jobAssistance": true,
-                "jobGuarantee": false,
-                "location": {
-                  "coordinates": []
-                },
-                "name": "New Neeew Bootcamp",
-                "photo": "default.jpg",
-                "website": "https://moderntech.com"
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps/5d725a037b292f5f8ceff787/photo": {
-      "put": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Upload Photo",
-        "description": "Upload Photo",
-        "operationId": "uploadPhoto",
-        "requestBody": {
-          "content": {
-            "application/octet-stream": {}
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps/5d725a037b292f5f8ceff787/reviews": {
-      "get": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Get Reviews",
-        "description": "Get Reviews",
-        "operationId": "getReviews",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         }
       },
-      "post": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Create a Review",
-        "description": "Create a Review",
-        "operationId": "createAReview",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "rating": {
-                    "type": "string",
-                    "example": "1"
-                  },
-                  "text": {
-                    "type": "string",
-                    "example": "loream ipsum"
-                  },
-                  "title": {
-                    "type": "string",
-                    "example": "New Review"
+      "/api/v1/auth/logout": {
+         "get": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Logout",
+            "description": "Clear token cookie.",
+            "operationId": "logout",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/auth/me": {
+         "get": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Get Me",
+            "description": "Get details of logged in user.",
+            "operationId": "getMe",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/auth/register": {
+         "post": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Register User",
+            "description": "Add user to database with encrypted password",
+            "operationId": "registerUser",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "example": "john@gmail.com"
+                           },
+                           "name": {
+                              "type": "string",
+                              "example": "John Doe"
+                           },
+                           "password": {
+                              "type": "string",
+                              "example": "123456"
+                           },
+                           "role": {
+                              "type": "string",
+                              "example": "publisher"
+                           }
+                        }
+                     },
+                     "example": {
+                        "email": "john@gmail.com",
+                        "name": "John Doe",
+                        "password": "123456",
+                        "role": "publisher"
+                     }
                   }
-                }
-              },
-              "example": {
-                "rating": "1",
-                "text": "loream ipsum",
-                "title": "New Review"
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps/5d725a1b7b292f5f8ceff788": {
-      "delete": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Delete a bootcamp",
-        "description": "Delete a bootcamp",
-        "operationId": "deleteABootcamp",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/courses": {
-      "get": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Get all Courses of a bootcamp",
-        "description": "Get all Courses of a bootcamp",
-        "operationId": "getAllCoursesOfABootcamp",
-        "parameters": [
-          {
-            "name": "",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         }
       },
-      "post": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Create a course",
-        "description": "Create a course",
-        "operationId": "createACourse",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "description": {
-                    "type": "string",
-                    "example": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB"
-                  },
-                  "minimumSkill": {
-                    "type": "string",
-                    "example": "intermediate"
-                  },
-                  "scholarshipAvailable": {
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "title": {
-                    "type": "string",
-                    "example": "Full Stack Web Development"
-                  },
-                  "tuition": {
-                    "type": "number",
-                    "example": 10000
-                  },
-                  "weeks": {
-                    "type": "string",
-                    "example": "12"
+      "/api/v1/auth/resetpassword/{passwordResetToken}": {
+         "put": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Reset Password",
+            "description": "Reset user password using token",
+            "operationId": "resetPassword",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "password": {
+                              "type": "string",
+                              "example": "123456"
+                           }
+                        }
+                     },
+                     "example": {
+                        "password": "123456"
+                     }
                   }
-                }
-              },
-              "example": {
-                "description": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB",
-                "minimumSkill": "intermediate",
-                "scholarshipAvailable": false,
-                "title": "Full Stack Web Development",
-                "tuition": 10000,
-                "weeks": "12"
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/bootcamps/radius/02118/10": {
-      "get": {
-        "tags": [
-          "Bootcamps"
-        ],
-        "summary": "Get all Bootcamps in Radius",
-        "description": "Get all Bootcamps in Radius",
-        "operationId": "getAllBootcampsInRadius",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/courses": {
-      "get": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Get all Courses",
-        "description": "Get all Courses",
-        "operationId": "getAllCourses",
-        "parameters": [
-          {
-            "name": "select",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "title"
+         },
+         "parameters": [
+            {
+               "name": "passwordResetToken",
+               "in": "path",
+               "required": true,
+               "schema": {
+                  "type": "string"
+               }
             }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "2"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "5"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/courses/5d725cb9c4ded7bcb480eaa1": {
-      "delete": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Delete a course",
-        "description": "Delete a course",
-        "operationId": "deleteACourse",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/courses/5d725ce8c4ded7bcb480eaa3": {
-      "get": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Get course by Id",
-        "description": "Get course by Id",
-        "operationId": "getCourseById",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         ]
       },
-      "put": {
-        "tags": [
-          "Courses"
-        ],
-        "summary": "Update Course",
-        "description": "Update Course",
-        "operationId": "updateCourse",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "tuition": {
-                    "type": "number",
-                    "example": 8000
+      "/api/v1/auth/update-details": {
+         "patch": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Update User Details",
+            "description": "Update logged in user name and email.",
+            "operationId": "updateUserDetails",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string",
+                              "example": "Atomic Samurai"
+                           }
+                        }
+                     },
+                     "example": {
+                        "name": "Atomic Samurai"
+                     }
                   }
-                }
-              },
-              "example": {
-                "tuition": 8000
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/reviews": {
-      "get": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Get all Reviews",
-        "description": "Get all Reviews",
-        "operationId": "getAllReviews",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/reviews/627c9958d3d8805b00818fec": {
-      "get": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Get Single Review",
-        "description": "Get Single Review",
-        "operationId": "getSingleReview",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/reviews/627c9d5f7089de43b270cef4": {
-      "delete": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Delete a Review",
-        "description": "Delete a Review",
-        "operationId": "deleteAReview",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         }
       },
-      "patch": {
-        "tags": [
-          "Reviews"
-        ],
-        "summary": "Update a Review",
-        "description": "Update a Review",
-        "operationId": "updateAReview",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "rating": {
-                    "type": "number",
-                    "example": 5
+      "/api/v1/auth/update-password": {
+         "patch": {
+            "tags": [
+               "Authentication"
+            ],
+            "summary": "Update User Password",
+            "description": "Update logged in user password, send in the body currentPassword and newPassword",
+            "operationId": "updateUserPassword",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "currentPassword": {
+                              "type": "string",
+                              "example": "abcd123"
+                           },
+                           "newPassword": {
+                              "type": "string",
+                              "example": "123456"
+                           }
+                        }
+                     },
+                     "example": {
+                        "currentPassword": "abcd123",
+                        "newPassword": "123456"
+                     }
                   }
-                }
-              },
-              "example": {
-                "rating": 5
-              }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get all users",
-        "description": "Get all users",
-        "operationId": "getAllUsers",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         }
       },
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Create User",
-        "description": "Create User",
-        "operationId": "createUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "sagyma@gmail.com"
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "sagyam"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "123456"
+      "/api/v1/bootcamps": {
+         "get": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Get all Bootcamps",
+            "description": "Fetch all bootcamps from database. Includes pagination, filtering, etc",
+            "operationId": "getAllBootcamps",
+            "parameters": [
+               {
+                  "name": "averageCost[gte]",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "100"
                   }
-                }
-              },
-              "example": {
-                "email": "sagyma@gmail.com",
-                "name": "sagyam",
-                "password": "123456"
-              }
+               },
+               {
+                  "name": "location.city",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "Boston"
+                  }
+               },
+               {
+                  "name": "careers[4]",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "Business"
+                  }
+               },
+               {
+                  "name": "select",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "name,description"
+                  }
+               },
+               {
+                  "name": "housing",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "false"
+                  }
+               },
+               {
+                  "name": "sort",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "name"
+                  }
+               },
+               {
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "4"
+                  }
+               },
+               {
+                  "name": "page",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "1"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": ""
+               }
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/users/627c68eefd2c87cc98fc3d56": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get a user",
-        "description": "Get a user",
-        "operationId": "getAUser",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+         },
+         "post": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Create a New Bootcamp",
+            "description": "Add new bootcamp to database. Must be authenticated and must be publisher or admin. Only one bootcamp allowed per publisher.",
+            "operationId": "createANewBootcamp",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "__v": {
+                              "type": "number",
+                              "example": 0
+                           },
+                           "address": {
+                              "type": "string",
+                              "example": "220 Pawtucket St, Lowell, MA 01854"
+                           },
+                           "careers": {
+                              "type": "array",
+                              "items": {
+                                 "type": "string",
+                                 "example": "Web Development"
+                              },
+                              "example": [
+                                 "Web Development",
+                                 "UI/UX",
+                                 "Mobile Development"
+                              ]
+                           },
+                           "createdAt": {
+                              "type": "string",
+                              "example": "2022-01-10T05:42:44.729Z"
+                           },
+                           "description": {
+                              "type": "string",
+                              "example": "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX"
+                           },
+                           "email": {
+                              "type": "string",
+                              "example": "enroll@moderntech.com"
+                           },
+                           "housing": {
+                              "type": "boolean",
+                              "example": false
+                           },
+                           "jobAssistance": {
+                              "type": "boolean",
+                              "example": true
+                           },
+                           "jobGuarantee": {
+                              "type": "boolean",
+                              "example": false
+                           },
+                           "location": {
+                              "type": "object",
+                              "properties": {
+                                 "coordinates": {
+                                    "type": "array",
+                                    "items": {},
+                                    "example": []
+                                 }
+                              }
+                           },
+                           "name": {
+                              "type": "string",
+                              "example": "New Neeew Bootcamp"
+                           },
+                           "photo": {
+                              "type": "string",
+                              "example": "default.jpg"
+                           },
+                           "website": {
+                              "type": "string",
+                              "example": "https://moderntech.com"
+                           }
+                        }
+                     },
+                     "example": {
+                        "__v": 0,
+                        "address": "220 Pawtucket St, Lowell, MA 01854",
+                        "careers": [
+                           "Web Development",
+                           "UI/UX",
+                           "Mobile Development"
+                        ],
+                        "createdAt": "2022-01-10T05:42:44.729Z",
+                        "description": "New has one goal, and that is to make you a rockstar developer and/or designer with a six figure salary. We teach both development and UI/UX",
+                        "email": "enroll@moderntech.com",
+                        "housing": false,
+                        "jobAssistance": true,
+                        "jobGuarantee": false,
+                        "location": {
+                           "coordinates": []
+                        },
+                        "name": "New Neeew Bootcamp",
+                        "photo": "default.jpg",
+                        "website": "https://moderntech.com"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
       },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete a user",
-        "description": "Delete a user",
-        "operationId": "deleteAUser",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+      "/api/v1/bootcamps/5d713995b721c3bb38c1f5d0/reviews": {
+         "get": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Get Reviews For Bootcamp",
+            "description": "Fetch the reviews for a specific bootcamp",
+            "operationId": "getReviewsForBootcamp",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "post": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Add Review For Bootcamp",
+            "description": "Insert review for a specific bootcamp.",
+            "operationId": "addReviewForBootcamp",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "rating": {
+                              "type": "string",
+                              "example": "3"
+                           },
+                           "text": {
+                              "type": "string",
+                              "example": "loream ipsum dolor"
+                           },
+                           "title": {
+                              "type": "string",
+                              "example": "New Review5"
+                           }
+                        }
+                     },
+                     "example": {
+                        "rating": "3",
+                        "text": "loream ipsum dolor",
+                        "title": "New Review5"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
       },
-      "patch": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Update a user",
-        "description": "Update a user",
-        "operationId": "updateAUser",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+      "/api/v1/bootcamps/5d725a037b292f5f8ceff787/photo": {
+         "put": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Upload Photo",
+            "description": "Route to upload a bootcamp photo.",
+            "operationId": "uploadPhoto",
+            "requestBody": {
+               "content": {
+                  "application/octet-stream": {}
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/bootcamps/5d725a1b7b292f5f8ceff788": {
+         "get": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Get Single Bootcamp",
+            "description": "Get single bootcamp by ID",
+            "operationId": "getSingleBootcamp",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "put": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Update a bootcamp",
+            "description": "Update single bootcamp in database.",
+            "operationId": "updateABootcamp",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string",
+                              "example": "Devcentral Bootcamp"
+                           }
+                        }
+                     },
+                     "example": {
+                        "name": "Devcentral Bootcamp"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "delete": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Delete a bootcamp",
+            "description": "Delete bootcamp from database",
+            "operationId": "deleteABootcamp",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/bootcamps/5d725a1b7b292f5f8ceff788/courses": {
+         "get": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Get all Courses of a bootcamp",
+            "description": "Get the specific courses for a bootcamp",
+            "operationId": "getAllCoursesOfABootcamp",
+            "parameters": [
+               {
+                  "name": "",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": ""
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "post": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Create a course",
+            "description": "Create a course for a specific bootcamp",
+            "operationId": "createACourse",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "description": {
+                              "type": "string",
+                              "example": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB"
+                           },
+                           "minimumSkill": {
+                              "type": "string",
+                              "example": "intermediate"
+                           },
+                           "scholarshipAvailable": {
+                              "type": "boolean",
+                              "example": false
+                           },
+                           "title": {
+                              "type": "string",
+                              "example": "Full Stack Web Development"
+                           },
+                           "tuition": {
+                              "type": "number",
+                              "example": 10000
+                           },
+                           "weeks": {
+                              "type": "string",
+                              "example": "12"
+                           }
+                        }
+                     },
+                     "example": {
+                        "description": "In this course you will learn full stack web development, first learning all about the frontend with HTML/CSS/JS/Vue and then the backend with Node.js/Express/MongoDB",
+                        "minimumSkill": "intermediate",
+                        "scholarshipAvailable": false,
+                        "title": "Full Stack Web Development",
+                        "tuition": 10000,
+                        "weeks": "12"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/bootcamps/radius/02118/10": {
+         "get": {
+            "tags": [
+               "Bootcamps"
+            ],
+            "summary": "Get all Bootcamps in Radius",
+            "description": "Get bootcamps within a radius of a specific zip code",
+            "operationId": "getAllBootcampsInRadius",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/courses": {
+         "get": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Get all Courses",
+            "description": "Get all courses in database",
+            "operationId": "getAllCourses",
+            "parameters": [
+               {
+                  "name": "select",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "title"
+                  }
+               },
+               {
+                  "name": "page",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "2"
+                  }
+               },
+               {
+                  "name": "limit",
+                  "in": "query",
+                  "schema": {
+                     "type": "string",
+                     "example": "5"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/courses/5d725cb9c4ded7bcb480eaa1": {
+         "delete": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Delete a course",
+            "description": "Remove course from database.",
+            "operationId": "deleteACourse",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/courses/5d725ce8c4ded7bcb480eaa3": {
+         "get": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Get course by Id",
+            "description": "Get the specific courses for a bootcamp",
+            "operationId": "getCourseById",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "put": {
+            "tags": [
+               "Courses"
+            ],
+            "summary": "Update Course",
+            "description": "Update course in database.",
+            "operationId": "updateCourse",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "tuition": {
+                              "type": "number",
+                              "example": 8000
+                           }
+                        }
+                     },
+                     "example": {
+                        "tuition": 8000
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/reviews": {
+         "get": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Get all Reviews",
+            "description": "Get all reviews from database and populate with bootcamp name and description",
+            "operationId": "getAllReviews",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/reviews/5d7a514b5d2c12c7449be020": {
+         "get": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Get Single Review",
+            "description": "Fetch a review from database by id and populate Bootcamp name and description.",
+            "operationId": "getSingleReview",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/reviews/62878ce442107443af6d4d78": {
+         "delete": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Delete a Review",
+            "description": "Remove review from database.",
+            "operationId": "deleteAReview",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "patch": {
+            "tags": [
+               "Reviews"
+            ],
+            "summary": "Update a Review",
+            "description": "Update review in database.",
+            "operationId": "updateAReview",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "rating": {
+                              "type": "number",
+                              "example": 2.2
+                           }
+                        }
+                     },
+                     "example": {
+                        "rating": 2.2
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/users": {
+         "get": {
+            "tags": [
+               "Users"
+            ],
+            "summary": "Get all users",
+            "description": "Get all users (admin)",
+            "operationId": "getAllUsers",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "post": {
+            "tags": [
+               "Users"
+            ],
+            "summary": "Create User",
+            "description": "Add user to database (admin)",
+            "operationId": "createUser",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "email": {
+                              "type": "string",
+                              "example": "sagyma@gmail.com"
+                           },
+                           "name": {
+                              "type": "string",
+                              "example": "sagyam"
+                           },
+                           "password": {
+                              "type": "string",
+                              "example": "123456"
+                           }
+                        }
+                     },
+                     "example": {
+                        "email": "sagyma@gmail.com",
+                        "name": "sagyam",
+                        "password": "123456"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
+      },
+      "/api/v1/users/5c8a1d5b0190b214360dc039": {
+         "get": {
+            "tags": [
+               "Users"
+            ],
+            "summary": "Get Single User",
+            "description": "Get single user by id (admin)",
+            "operationId": "getSingleUser",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "delete": {
+            "tags": [
+               "Users"
+            ],
+            "summary": "Delete a user",
+            "description": "Delete user from database (admin)",
+            "operationId": "deleteAUser",
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         },
+         "patch": {
+            "tags": [
+               "Users"
+            ],
+            "summary": "Update a user",
+            "description": "Update user in database (admin)",
+            "operationId": "updateAUser",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string",
+                              "example": "Nate Johnson"
+                           }
+                        }
+                     },
+                     "example": {
+                        "name": "Nate Johnson"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            }
+         }
       }
-    }
-  },
-  "tags": [
-    {
-      "name": "Bootcamps"
-    },
-    {
-      "name": "Courses"
-    },
-    {
-      "name": "Auth"
-    },
-    {
-      "name": "Users"
-    },
-    {
-      "name": "Reviews"
-    }
-  ]
+   },
+   "tags": [
+      {
+         "name": "Bootcamps",
+         "description": "Bootcamps CRUD functionality"
+      },
+      {
+         "name": "Courses",
+         "description": "Create, read, update and delete courses"
+      },
+      {
+         "name": "Authentication",
+         "description": "Routes for user authentication including register, login, reset password, etc"
+      },
+      {
+         "name": "Users",
+         "description": "CRUD functionality for users only available to admin users."
+      },
+      {
+         "name": "Reviews",
+         "description": "Manage course reviews"
+      }
+   ]
 }

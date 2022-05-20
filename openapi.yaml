@@ -2,18 +2,18 @@
 openapi: 3.0.3
 info:
   title: DevCamper API
+  description: "Backend API for the DevCamper application to manage bootcamps, courses, reviews, users and authentication"
   version: 1.0.0
   contact: {}
 servers:
-  - url: "https://dev-camper7.herokuapp.com/"
-  - url: "http://localhost:5000"
+  - url: "{{https://dev-camper7.herokuapp.com}}"
 paths:
   /api/v1/auth/forgotpassword:
     post:
       tags:
-        - Auth
+        - Authentication
       summary: Forgot Password
-      description: Forgot Password
+      description: Generate password token and send email
       operationId: forgotPassword
       requestBody:
         content:
@@ -32,9 +32,9 @@ paths:
   /api/v1/auth/login:
     post:
       tags:
-        - Auth
+        - Authentication
       summary: Login
-      description: Login
+      description: Log a registered user.
       operationId: login
       requestBody:
         content:
@@ -43,17 +43,13 @@ paths:
               type: object
               properties:
                 email:
-                  type: object
-                  properties:
-                    $gt:
-                      type: string
-                      example: ""
+                  type: string
+                  example: atomicsamurai32@gmail.com
                 password:
                   type: string
                   example: "123456"
             example:
-              email:
-                $gt: ""
+              email: atomicsamurai32@gmail.com
               password: "123456"
       responses:
         "200":
@@ -61,9 +57,9 @@ paths:
   /api/v1/auth/logout:
     get:
       tags:
-        - Auth
+        - Authentication
       summary: Logout
-      description: Logout
+      description: Clear token cookie.
       operationId: logout
       responses:
         "200":
@@ -71,9 +67,9 @@ paths:
   /api/v1/auth/me:
     get:
       tags:
-        - Auth
+        - Authentication
       summary: Get Me
-      description: Get Me
+      description: Get details of logged in user.
       operationId: getMe
       responses:
         "200":
@@ -81,9 +77,9 @@ paths:
   /api/v1/auth/register:
     post:
       tags:
-        - Auth
+        - Authentication
       summary: Register User
-      description: Register User
+      description: Add user to database with encrypted password
       operationId: registerUser
       requestBody:
         content:
@@ -111,12 +107,12 @@ paths:
       responses:
         "200":
           description: ""
-  /api/v1/auth/resetpassword/7585d2a5fba2b5f796bab846608fade8922cdddf:
+  "/api/v1/auth/resetpassword/{passwordResetToken}":
     put:
       tags:
-        - Auth
+        - Authentication
       summary: Reset Password
-      description: Reset Password
+      description: Reset user password using token
       operationId: resetPassword
       requestBody:
         content:
@@ -126,44 +122,46 @@ paths:
               properties:
                 password:
                   type: string
-                  example: "123456789"
+                  example: "123456"
             example:
-              password: "123456789"
+              password: "123456"
       responses:
         "200":
           description: ""
+    parameters:
+      - name: passwordResetToken
+        in: path
+        required: true
+        schema:
+          type: string
   /api/v1/auth/update-details:
     patch:
       tags:
-        - Auth
-      summary: Update Details
-      description: Update Details
-      operationId: updateDetails
+        - Authentication
+      summary: Update User Details
+      description: Update logged in user name and email.
+      operationId: updateUserDetails
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                email:
-                  type: string
-                  example: user@gmail.com
                 name:
                   type: string
-                  example: User Account
+                  example: Atomic Samurai
             example:
-              email: user@gmail.com
-              name: User Account
+              name: Atomic Samurai
       responses:
         "200":
           description: ""
   /api/v1/auth/update-password:
     patch:
       tags:
-        - Auth
-      summary: Update Password
-      description: Update Password
-      operationId: updatePassword
+        - Authentication
+      summary: Update User Password
+      description: "Update logged in user password, send in the body currentPassword and newPassword"
+      operationId: updateUserPassword
       requestBody:
         content:
           application/json:
@@ -186,26 +184,58 @@ paths:
     get:
       tags:
         - Bootcamps
-      summary: Get single bootcamp by id
-      description: Get single bootcamp by id
-      operationId: getSingleBootcampById
-      responses:
-        "200":
-          description: ""
-    put:
-      tags:
-        - Bootcamps
-      summary: Update a bootcamp
-      description: Update a bootcamp
-      operationId: updateABootcamp
+      summary: Get all Bootcamps
+      description: "Fetch all bootcamps from database. Includes pagination, filtering, etc"
+      operationId: getAllBootcamps
+      parameters:
+        - name: "averageCost[gte]"
+          in: query
+          schema:
+            type: string
+            example: "100"
+        - name: location.city
+          in: query
+          schema:
+            type: string
+            example: Boston
+        - name: "careers[4]"
+          in: query
+          schema:
+            type: string
+            example: Business
+        - name: select
+          in: query
+          schema:
+            type: string
+            example: "name,description"
+        - name: housing
+          in: query
+          schema:
+            type: string
+            example: "false"
+        - name: sort
+          in: query
+          schema:
+            type: string
+            example: name
+        - name: limit
+          in: query
+          schema:
+            type: string
+            example: "4"
+        - name: page
+          in: query
+          schema:
+            type: string
+            example: "1"
       responses:
         "200":
           description: ""
     post:
       tags:
         - Bootcamps
-      summary: Create a new bootcamp
-      description: Create a new bootcamp
+      summary: Create a New Bootcamp
+      description: Add new bootcamp to database. Must be authenticated and must be publisher or admin. Only one bootcamp allowed per publisher.
       operationId: createANewBootcamp
       requestBody:
         content:
@@ -283,35 +313,22 @@ paths:
       responses:
         "200":
           description: ""
-  /api/v1/bootcamps/5d725a037b292f5f8ceff787/photo:
-    put:
-      tags:
-        - Bootcamps
-      summary: Upload Photo
-      description: Upload Photo
-      operationId: uploadPhoto
-      requestBody:
-        content:
-          application/octet-stream: {}
-      responses:
-        "200":
-          description: ""
-  /api/v1/bootcamps/5d725a037b292f5f8ceff787/reviews:
+  /api/v1/bootcamps/5d713995b721c3bb38c1f5d0/reviews:
     get:
       tags:
         - Reviews
-      summary: Get Reviews
-      description: Get Reviews
-      operationId: getReviews
+      summary: Get Reviews For Bootcamp
+      description: Fetch the reviews for a specific bootcamp
+      operationId: getReviewsForBootcamp
       responses:
         "200":
           description: ""
     post:
       tags:
         - Reviews
-      summary: Create a Review
-      description: Create a Review
-      operationId: createAReview
+      summary: Add Review For Bootcamp
+      description: Insert review for a specific bootcamp.
+      operationId: addReviewForBootcamp
       requestBody:
         content:
           application/json:
@@ -320,26 +337,68 @@ paths:
               properties:
                 rating:
                   type: string
-                  example: "1"
+                  example: "3"
                 text:
                   type: string
-                  example: loream ipsum
+                  example: loream ipsum dolor
                 title:
                   type: string
-                  example: New Review
+                  example: New Review5
             example:
-              rating: "1"
-              text: loream ipsum
-              title: New Review
+              rating: "3"
+              text: loream ipsum dolor
+              title: New Review5
+      responses:
+        "200":
+          description: ""
+  /api/v1/bootcamps/5d725a037b292f5f8ceff787/photo:
+    put:
+      tags:
+        - Bootcamps
+      summary: Upload Photo
+      description: Route to upload a bootcamp photo.
+      operationId: uploadPhoto
+      requestBody:
+        content:
+          application/octet-stream: {}
       responses:
         "200":
           description: ""
   /api/v1/bootcamps/5d725a1b7b292f5f8ceff788:
+    get:
+      tags:
+        - Bootcamps
+      summary: Get Single Bootcamp
+      description: Get single bootcamp by ID
+      operationId: getSingleBootcamp
+      responses:
+        "200":
+          description: ""
+    put:
+      tags:
+        - Bootcamps
+      summary: Update a bootcamp
+      description: Update single bootcamp in database.
+      operationId: updateABootcamp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Devcentral Bootcamp
+            example:
+              name: Devcentral Bootcamp
+      responses:
+        "200":
+          description: ""
     delete:
       tags:
         - Bootcamps
       summary: Delete a bootcamp
-      description: Delete a bootcamp
+      description: Delete bootcamp from database
       operationId: deleteABootcamp
       responses:
         "200":
@@ -349,13 +408,14 @@ paths:
       tags:
         - Courses
       summary: Get all Courses of a bootcamp
-      description: Get all Courses of a bootcamp
+      description: Get the specific courses for a bootcamp
       operationId: getAllCoursesOfABootcamp
       parameters:
         - name: ""
           in: query
           schema:
             type: string
+            example: ""
       responses:
         "200":
           description: ""
@@ -363,7 +423,7 @@ paths:
       tags:
         - Courses
       summary: Create a course
-      description: Create a course
+      description: Create a course for a specific bootcamp
       operationId: createACourse
       requestBody:
         content:
@@ -404,7 +464,7 @@ paths:
       tags:
         - Bootcamps
       summary: Get all Bootcamps in Radius
-      description: Get all Bootcamps in Radius
+      description: Get bootcamps within a radius of a specific zip code
       operationId: getAllBootcampsInRadius
       responses:
         "200":
@@ -414,7 +474,7 @@ paths:
       tags:
         - Courses
       summary: Get all Courses
-      description: Get all Courses
+      description: Get all courses in database
       operationId: getAllCourses
       parameters:
         - name: select
@@ -440,7 +500,7 @@ paths:
       tags:
         - Courses
       summary: Delete a course
-      description: Delete a course
+      description: Remove course from database.
       operationId: deleteACourse
       responses:
         "200":
@@ -450,7 +510,7 @@ paths:
       tags:
         - Courses
       summary: Get course by Id
-      description: Get course by Id
+      description: Get the specific courses for a bootcamp
       operationId: getCourseById
       responses:
         "200":
@@ -459,7 +519,7 @@ paths:
       tags:
         - Courses
       summary: Update Course
-      description: Update Course
+      description: Update course in database.
       operationId: updateCourse
       requestBody:
         content:
@@ -480,27 +540,27 @@ paths:
       tags:
         - Reviews
       summary: Get all Reviews
-      description: Get all Reviews
+      description: Get all reviews from database and populate with bootcamp name and description
       operationId: getAllReviews
       responses:
         "200":
           description: ""
-  /api/v1/reviews/627c9958d3d8805b00818fec:
+  /api/v1/reviews/5d7a514b5d2c12c7449be020:
     get:
       tags:
         - Reviews
       summary: Get Single Review
-      description: Get Single Review
+      description: Fetch a review from database by id and populate Bootcamp name and description.
       operationId: getSingleReview
       responses:
         "200":
           description: ""
-  /api/v1/reviews/627c9d5f7089de43b270cef4:
+  /api/v1/reviews/62878ce442107443af6d4d78:
     delete:
       tags:
         - Reviews
       summary: Delete a Review
-      description: Delete a Review
+      description: Remove review from database.
       operationId: deleteAReview
       responses:
         "200":
@@ -509,7 +569,7 @@ paths:
       tags:
         - Reviews
       summary: Update a Review
-      description: Update a Review
+      description: Update review in database.
       operationId: updateAReview
       requestBody:
         content:
@@ -519,9 +579,9 @@ paths:
               properties:
                 rating:
                   type: number
-                  example: 5
+                  example: 2.2
             example:
-              rating: 5
+              rating: 2.2
       responses:
         "200":
           description: ""
@@ -530,7 +590,7 @@ paths:
       tags:
         - Users
       summary: Get all users
-      description: Get all users
+      description: Get all users (admin)
       operationId: getAllUsers
       responses:
         "200":
@@ -539,7 +599,7 @@ paths:
       tags:
         - Users
       summary: Create User
-      description: Create User
+      description: Add user to database (admin)
       operationId: createUser
       requestBody:
         content:
@@ -563,13 +623,13 @@ paths:
       responses:
         "200":
           description: ""
-  /api/v1/users/627c68eefd2c87cc98fc3d56:
+  /api/v1/users/5c8a1d5b0190b214360dc039:
     get:
       tags:
         - Users
-      summary: Get a user
-      description: Get a user
-      operationId: getAUser
+      summary: Get Single User
+      description: Get single user by id (admin)
+      operationId: getSingleUser
       responses:
         "200":
           description: ""
@@ -577,7 +637,7 @@ paths:
       tags:
         - Users
       summary: Delete a user
-      description: Delete a user
+      description: Delete user from database (admin)
       operationId: deleteAUser
       responses:
         "200":
@@ -586,14 +646,30 @@ paths:
       tags:
         - Users
       summary: Update a user
-      description: Update a user
+      description: Update user in database (admin)
       operationId: updateAUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Nate Johnson
+            example:
+              name: Nate Johnson
       responses:
         "200":
           description: ""
 tags:
   - name: Bootcamps
+    description: Bootcamps CRUD functionality
   - name: Courses
-  - name: Auth
+    description: "Create, read, update and delete courses"
+  - name: Authentication
+    description: "Routes for user authentication including register, login, reset password, etc"
   - name: Users
+    description: CRUD functionality for users only available to admin users.
   - name: Reviews
+    description: Manage course reviews
