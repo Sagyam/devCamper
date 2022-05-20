@@ -1,5 +1,7 @@
 # DevCamper
 
+[![wakatime](https://wakatime.com/badge/user/4ce09006-1b8c-491f-ace1-a70b32d5fc1c/project/42820fa0-dc36-4ed8-aa2d-1d5fe3d70659.svg?style=for-the-badge)](https://wakatime.com/badge/user/4ce09006-1b8c-491f-ace1-a70b32d5fc1c/project/42820fa0-dc36-4ed8-aa2d-1d5fe3d70659)
+
 Backend API for DevCamper application, which is a bootcamp directory website
 
 [Live Version](https://dev-camper7.herokuapp.com/)
