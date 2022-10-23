@@ -4,8 +4,6 @@
 
 Backend API for DevCamper application, which is a bootcamp directory website
 
-[Live Version with API Documentation](https://dev-camper7.herokuapp.com/)
-
 ## Usage
 
 Rename "config/config.env.env" to "config/config.env" and update the values/settings to your own
