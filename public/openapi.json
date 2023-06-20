@@ -8,7 +8,7 @@
    },
    "servers": [
       {
-         "url": "https://dev-camper7.herokuapp.com"
+         "url": "https://devcamper-production-5d2e.up.railway.app"
       }
    ],
    "paths": {

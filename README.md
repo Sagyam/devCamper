@@ -11,17 +11,17 @@ Rename "config/config.env.env" to "config/config.env" and update the values/sett
 ## Install Dependencies
 
 ```
-yarn install
+pnpm install
 ```
 
 ## Run App
 
 ```
 # Run in dev mode
-yarn dev
+pnpm dev
 
 # Run in prod mode
-yarn start
+pnpm start
 ```
 
 ## Database Seeder
